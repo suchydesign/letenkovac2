@@ -1,12 +1,14 @@
 package cheapFlights.models;
 
+import cheapFlights.helpers.StringHelper;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "posts")
 public class Post {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "fb_id")
@@ -42,6 +44,24 @@ public class Post {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    public Post() {}
+
+    public Post(org.springframework.social.facebook.api.Post post, FanPage fanPage) {
+        setFbId(post.getId());
+        setMessage(StringHelper.removeMb4Chars(post.getMessage()));
+        setLink(post.getLink());
+        setName(StringHelper.removeMb4Chars(post.getName()));
+        setDescription(StringHelper.removeMb4Chars(post.getDescription()));
+        setPicture(post.getPicture());
+        if(post.getType() != null && post.getType().name() != null) {
+            setStatus(PostTypes.get(post.getType().name()));
+        }
+        setFanPage(fanPage);
+        setCreatedTime(post.getCreatedTime());
+        setCreatedAt(new Date());
+        setUpdatedAt(new Date());
+    }
 
     public int getId() {
         return id;

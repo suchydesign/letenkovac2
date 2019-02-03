@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity(name = "fan_pages")
 public class FanPage {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
@@ -20,6 +20,9 @@ public class FanPage {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @Column
+    private boolean active;
 
     public int getId() {
         return id;
@@ -59,5 +62,13 @@ public class FanPage {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
