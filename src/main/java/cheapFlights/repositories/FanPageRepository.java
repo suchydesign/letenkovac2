@@ -6,5 +6,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface FanPageRepository extends PagingAndSortingRepository<FanPage, Long> {
     @Query("select fp from cheapFlights.models.FanPage fp where fp.active = true")
-    public Iterable<FanPage> findAllActive();
+    Iterable<FanPage> findAllActive();
+
+    @Query("select fp from cheapFlights.models.FanPage fp where fp.fbId = ?1")
+    FanPage findByFbId(String fbId);
 }

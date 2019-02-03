@@ -1,6 +1,8 @@
 package cheapFlights.controllers;
 
+import cheapFlights.models.FanPage;
 import cheapFlights.models.Post;
+import cheapFlights.repositories.FanPageRepository;
 import cheapFlights.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,9 +28,19 @@ public class PostsController {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private FanPageRepository fanPageRepository;
+
     @RequestMapping(value = "posts/{page}", method = RequestMethod.GET)
     public Iterable<Post> posts(@PathVariable(name = "page") int page) {
         Sort sort = new Sort(Sort.Direction.fromString("DESC"), Arrays.asList("createdTime"));
         return postRepository.findAll(new PageRequest(page, limit, sort));
+    }
+
+    @RequestMapping(value = "posts/{fanPageFbId}/{page}", method = RequestMethod.GET)
+    public Iterable<Post> posts(@PathVariable(name = "fanPageFbId") String fanPageFbId, @PathVariable(name = "page") int page) {
+        Sort sort = new Sort(Sort.Direction.fromString("DESC"), Arrays.asList("createdTime"));
+        FanPage fanPage = fanPageRepository.findByFbId(fanPageFbId);
+        return postRepository.findAllBy(new PageRequest(page, limit, sort), fanPage);
     }
 }
