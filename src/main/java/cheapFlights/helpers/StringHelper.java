@@ -3,7 +3,7 @@ package cheapFlights.helpers;
 public class StringHelper {
     public static String removeMb4Chars(String s) {
         if(notEmpty(s)) {
-            return s.replaceAll("[^\\u0000-\\uFFFF]", "\uFFFD");
+            return s.replaceAll("[^\\u0000-\\uFFFF]", "");
         }
         return s;
     }
