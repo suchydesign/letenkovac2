@@ -33,7 +33,7 @@ public class PostDownloader {
     private int newPostsCount;
 
     // every 30 minutes
-    @Scheduled(fixedRate = 30 * 60 * 1000)
+//    @Scheduled(fixedRate = 30 * 60 * 1000)
     public void downloadNewPosts() {
         appId = env.getProperty("spring.social.facebook.appId");
         appSecret = env.getProperty("spring.social.facebook.appSecret");
